@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://cn1tdhikdy5f4"]
+
+[ext_resource type="Script" uid="uid://0gcaxux8our8" path="res://spawn_points.gd" id="1_brdin"]
+[ext_resource type="PackedScene" uid="uid://dr34dpuhe3b5y" path="res://Scenes/Enteties/slime.tscn" id="2_2v5sm"]
+[ext_resource type="Texture2D" uid="uid://cfrol5nmkemx4" path="res://Set 1.5.png" id="2_iqofc"]
+[ext_resource type="AudioStream" uid="uid://cjwmtddxnymcj" path="res://Audio/button.mp3" id="3_2v5sm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cj6k"]
+atlas = ExtResource("2_iqofc")
+region = Rect2(304, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b50er"]
+atlas = ExtResource("2_iqofc")
+region = Rect2(304, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmeq8"]
+atlas = ExtResource("2_iqofc")
+region = Rect2(320, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4v0j"]
+atlas = ExtResource("2_iqofc")
+region = Rect2(336, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_66eo2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cj6k")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b50er")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmeq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4v0j")
+}],
+"loop": false,
+"name": &"press",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l45l8"]
+size = Vector2(12, 13)
+
+[node name="TriggerNode" type="Node2D"]
+script = ExtResource("1_brdin")
+enemy_scene = ExtResource("2_2v5sm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_66eo2")
+animation = &"idle"
+
+[node name="press" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="press"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_l45l8")
+
+[node name="SpawnPoints" type="Node" parent="."]
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(965, 409)
+
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(971, 542)
+
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1044, 475)
+
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints"]
+
+[node name="Spawn5" type="Marker2D" parent="SpawnPoints"]
+
+[node name="Spawn6" type="Marker2D" parent="SpawnPoints"]
+
+[node name="button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_2v5sm")
+volume_db = -10.0
+pitch_scale = 2.2
+
+[connection signal="body_entered" from="press" to="." method="_on_press_body_entered"]
+[connection signal="body_exited" from="press" to="." method="_on_press_body_exited"]
